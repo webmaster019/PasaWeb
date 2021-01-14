@@ -15,6 +15,8 @@ import { UserCard } from "components/UserCard/UserCard.jsx";
 import { thArray, tdArray } from "variables/Variables.jsx";
 import "assets/css/customcss.css";
 import Button from 'react-bootstrap/Button';
+import {Api_route} from '../components/baseApi'
+import axios from 'axios';
 
 
 class UserProfile extends Component {
@@ -22,14 +24,53 @@ class UserProfile extends Component {
     super()
     this.state = {
         change_panel:false,
+        dataSource:[]
     }
+    this.email=null;
+  this.name=null;
+  this.password=null;
+  this.confirm_password=null;
+  this.phone=null;
+  this.role=null;
+ 
 
 
   }
   change_panel(etat){
     this.setState({change_panel:etat});
   }
+
+
+  Get_user_from_api() {
+   
+
+    const url = "users?page=0&size=4"
+    fetch(Api_route(url))
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          dataSource:responseJson.content,
+        })
+
+      })
+      .catch((error) => {
+
+        console.log(error)
+       
+      })
+
+
+
+  }
+
+  componentDidMount() {
+   this.Get_user_from_api();
+  }
+
+
+
   render() {
+
     return (
      
       <div className="content">
@@ -51,33 +92,37 @@ class UserProfile extends Component {
 
                   <Form>
                     <Form.Group controlId="formnom">
-                      <Form.Label>Nom :</Form.Label>
-                      <Form.Control type="text" placeholder="Enter le mon" />
+                      <Form.Label>Nom complet :</Form.Label>
+                      <Form.Control type="text" placeholder="Enter le mon complet" />
                     </Form.Group>
 
-                    <Form.Group controlId="formnom">
-                      <Form.Label>Postnom :</Form.Label>
-                      <Form.Control type="text" placeholder="Enter le Postnom" />
+                    <Form.Group controlId="foremail">
+                      <Form.Label>Email :</Form.Label>
+                      <Form.Control type="text" placeholder="Enter le email" />
                     </Form.Group>
 
-                    <Form.Group controlId="formnom">
-                      <Form.Label>Prenom :</Form.Label>
-                      <Form.Control type="text" placeholder="Enter le Prenom" />
-                    </Form.Group>
-
-                    <Form.Group controlId="formnom">
+                    <Form.Group controlId="forphone">
                       <Form.Label>Numéro de téléphone :</Form.Label>
-                      <Form.Control type="tel" placeholder="Enter le Numéro de téléphone " />
+                      <Form.Control type="tel" placeholder="le Numéro de téléphone " />
+                    </Form.Group>
+
+                    <Form.Group controlId="forpss">
+                      <Form.Label>Mot de pass:</Form.Label>
+                      <Form.Control type="password" placeholder="Mot de pass " />
+                    </Form.Group>
+                    <Form.Group controlId="forpss">
+                      <Form.Label>Confirmer le mot de pass:</Form.Label>
+                      <Form.Control type="password" placeholder="Confirmer le mot de pass " />
                     </Form.Group>
 
 
 
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
-                      <Form.Label>Sexe</Form.Label>
+                      <Form.Label>Role</Form.Label>
                       <Form.Control as="select">
-                        <option>M</option>
-                        <option>F</option>
+                        <option>admin</option>
+                        <option>agent</option>
 
                       </Form.Control>
                     </Form.Group>
@@ -143,18 +188,24 @@ class UserProfile extends Component {
                   <Table striped hover>
                     <thead>
                       <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
+                      <th >NOM COMPLET</th>
+                      {/* <th >NUMERO DE TELEEPHONE</th> */}
+                      <th >EMAIL</th>
+                      <th>ROLE</th>
+                      <th>DATE DE CREATION</th>
+                      <th>DATE DE MODIFICATION</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {tdArray.map((prop, key) => {
+                      {this.state.dataSource.map((data, key) => {
                         return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
+                          <tr  key={key}>
+                            <td>{data.name}</td>
+                            {/* <td>{data.phone}</td> */}
+                            <td>{data.email}</td>
+                            <td>{data.role}</td>
+                            <td>{data.creationDate}</td>
+                            <td>{data.updateDate}</td>
                           </tr>
                         );
                       })}

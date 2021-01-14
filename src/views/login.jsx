@@ -9,8 +9,9 @@ import "assets/css/customcss.css"
 import "assets/css/light-bootstrap-dashboard-react.css"
 import avatar from "assets/img/default-avatar.png"
 
-
 class Login extends Component {
+
+
   render() {
     return (
    
@@ -19,7 +20,7 @@ class Login extends Component {
         <div className="wrap-login100 p-t-50 p-b-3 bg_wt">
           <div className="logoLogin ">
             <h2 className="titre_logo2">
-              PASA<i class="fa fa-leaf" aria-hidden="true"></i>
+              PASA<i className="fa fa-leaf" aria-hidden="true"></i>
             </h2>
             <p>
               Dashboard
