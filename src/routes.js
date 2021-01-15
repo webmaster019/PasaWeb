@@ -19,7 +19,7 @@ const dashboardRoutes = [
   },
   {
     path: "/user",
-    name: "Utilisateurs",
+    name: "Agents",
     icon: "pe-7s-user",
     component: UserProfile,
     layout: "/admin"
