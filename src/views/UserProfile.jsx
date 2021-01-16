@@ -9,21 +9,21 @@ import {
 import Form from 'react-bootstrap/Form'
 
 import { Card } from "components/Card/Card.jsx";
-import { FormInputs } from "components/FormInputs/FormInputs.jsx";
-import { UserCard } from "components/UserCard/UserCard.jsx";
-// import Button from "components/CustomButton/CustomButton.jsx";
-import { thArray, tdArray } from "variables/Variables.jsx";
+
 import "assets/css/customcss.css";
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 import { Api_route } from '../components/baseApi'
 import axios from 'axios';
 import Spinner from 'react-spinner-material';
+//import Badge from 'react-bootstrap/Badge'
+ import 'materialize-css';
+
 
 class UserProfile extends Component {
   constructor() {
     super()
     this.state = {
-      change_panel: false,
+      change_panel: true,
       dataSource: [],
       isload_data: true,
       email: null,
@@ -31,22 +31,26 @@ class UserProfile extends Component {
       password: null,
       phone: null,
       role: "AGENT",
-      conf_password:null,
+      conf_password: null,
+      modalShow:false,
+      idUser:null,
+      is_createuser:false,
     }
- 
+
 
 
 
   }
   change_panel(etat) {
-    this.setState({ change_panel: etat,
+    this.setState({
+      change_panel: etat,
       email: null,
       name: null,
       password: null,
       phone: null,
       role: "AGENT",
-      conf_password:null,
-     });
+      conf_password: null,
+    });
   }
 
 
@@ -60,7 +64,11 @@ class UserProfile extends Component {
         this.setState({
           dataSource: responseJson.content,
           isload_data: false,
+          modalShow:false,
+          idUser:null,
+          is_createuser:false,
         })
+        //console.log(responseJson);
 
       })
       .catch((error) => {
@@ -71,43 +79,78 @@ class UserProfile extends Component {
 
 
 
+
   }
 
   componentDidMount() {
     this.Get_user_from_api();
   }
-  
-  changeHandler=e =>{
-    this.setState({[e.target.name]:e.target.value});
+
+  changeHandler = e => {
+    this.setState({ [e.target.name]: e.target.value });
   }
-  submitHandeler= e =>{
+  submitHandeler = e => {
     e.preventDefault();
-    const {email,name,password,phone,role, conf_password}=this.state;
-    let Body={
-      "email":email,
-      "name":name,
-      "password":password,
-      "phone":phone,
-      "role":role
+    const { email, name, password, phone, role, conf_password } = this.state;
+    let Body = {
+      "email": email,
+      "name": name,
+      "password": password,
+      "phone": phone,
+      "role": role
 
     };
-    axios.post(Api_route("users?userId=1"),Body)
-    .then(response =>{
-      this.Get_user_from_api();
-      console.log(response);
-    })
-    .catch(error=>{
-      console.log(error);
-    })
+    axios.post(Api_route("users?userId=1"), Body)
+      .then(response => {
+        this.Get_user_from_api();
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      })
 
   }
 
+  changeEtatuserHandeler(idUser){
+    if(idUser){
+      axios.patch(Api_route("users/disable-user?updatedBy=1&userId="+idUser))
+      .then(response => {
+        this.Get_user_from_api();
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  }
+
+  deleteHandeler(idUser){
+    if(idUser){
+      axios.delete(Api_route("users/"+idUser))
+      .then(response => {
+        this.Get_user_from_api();
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  }
+  modalEvent(event,id){
+    this.setState({
+      modalShow:event,
+      idUser:id,
+    });
+  }
   render() {
-    const {email,name,password,phone,role, conf_password}=this.state;
+    const { email, name, password, phone, role, conf_password } = this.state;
+    // console.log(this.state.dataSource);
+    
 
     return (
 
       <div className="content">
+
 
 
 
@@ -124,7 +167,12 @@ class UserProfile extends Component {
                     title="Ajouter Un utilisateur"
                     content={
 
-                      <Form onSubmit={this.submitHandeler}>
+                      <Form onSubmit={()=>{
+                        this.setState({
+                          is_createuser:true
+                        },this.submitHandeler);
+                      }}>
+                        
                         <Form.Group controlId="formnom">
                           <Form.Label>Nom complet :</Form.Label>
                           <Form.Control type="text" placeholder="Enter le mon complet" name="name" required value={name} onChange={this.changeHandler} />
@@ -160,12 +208,26 @@ class UserProfile extends Component {
 
                           </Form.Control>
                         </Form.Group>
-                        <Button variant="primary" type="submit" >
-                          Enregistrer
-                     </Button>
-                        <Button variant="danger" type="button" className="btn_margin" onClick={() => { this.change_panel(false) }}>
-                          Annuler
-                     </Button>
+                    {
+                      !this.state.is_createuser
+                      ?
+                      <>
+                      <Button variant="primary" type="submit" >
+                      Enregistrer
+                 </Button>
+                    <Button variant="danger" type="button" className="btn_margin" onClick={() => { this.change_panel(false) }}>
+                      Annuler
+                 </Button>
+                 <div className="col-lg-12 bg_danger m-t-3" >
+                   <span>message</span>
+                 </div>
+                 </>
+                 :
+                 <div className="loader">
+                        <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={this.state.isload_data} />
+                      </div>
+
+                    }
 
                       </Form>
 
@@ -208,7 +270,7 @@ class UserProfile extends Component {
               </Grid>
 
 
-     
+
 
 
               <Grid fluid>
@@ -224,7 +286,7 @@ class UserProfile extends Component {
                       ctTableResponsive
                       content={
                         <>
-                       
+
                           <Table striped hover>
                             <thead>
                               <tr>
@@ -232,13 +294,15 @@ class UserProfile extends Component {
                                 {/* <th >NUMERO DE TELEEPHONE</th> */}
                                 <th >EMAIL</th>
                                 <th>ROLE</th>
+                                <th>ETAT</th>
                                 <th>DATE DE CREATION</th>
                                 <th>DATE DE MODIFICATION</th>
+                                <th>ACTION</th>
                               </tr>
                             </thead>
 
                             <tbody>
-                         
+
                               {this.state.dataSource.map((data, key) => {
                                 return (
                                   <tr key={key}>
@@ -246,16 +310,57 @@ class UserProfile extends Component {
                                     {/* <td>{data.phone}</td> */}
                                     <td>{data.email}</td>
                                     <td>{data.role}</td>
+                                    <td>
+                                      {/* <Badge pill variant="primary">
+                                        Info
+                                      </Badge>{''} */
+                                      }
+                                      <span className={data.enabled?"etat bg_site":"etat bg_danger"}>{data.enabled?"ACTIVÉ":"DESACTIVÉ"} </span>
+                                    </td>
                                     <td>{data.creationDate}</td>
                                     <td>{data.updateDate}</td>
+                                   {/* <td><Button variant={data.enabled?"danger":"primary"}>{data.enabled?"ACTIVER":"DESACTIVER"}</Button></td>  */}
+                                   <td> <button className={data.enabled?"bg_danger btn  btn_site":"bg_site btn  btn_site"} onClick={()=>{
+                                     this.setState({
+                                       isload_data:true
+                                     },this.changeEtatuserHandeler(data.id));
+                                   }}  >{data.enabled?"DESACTIVER":"REACTIVER"}</button></td>
+                                   <td>
+                                    {
+                                      this.state.modalShow && this.state.idUser==data.id
+                                      ?
+                                      <div>
+                                      <p>Etez-vous sûr de vouloir supprimer cet agent?</p>
+                                      <p><button className="text-danger" 
+                                      onClick={()=>{
+                                        this.deleteHandeler(data.id);
+                                      }}
+                                      >oui</button>
+                                      <button className="text-primary" 
+                                       onClick={()=>{
+                                        this.modalEvent(false,null);
+                                      }}
+                                      >non</button></p>
+
+                                    </div>
+                                      :
+                                      <button className="bg_danger btn  btn_site" 
+                                      onClick={()=>{
+                                        this.modalEvent(true,data.id);
+                                      }}
+                                      >suprimer</button>
+                                    
+                                     
+                                    }
+                                    </td>
                                   </tr>
                                 );
                               })}
                             </tbody>
                           </Table>
                           <div className="loader">
-                        <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={this.state.isload_data} />
-                      </div>
+                            <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={this.state.isload_data} />
+                          </div>
                         </>
                       }
                     />
@@ -264,6 +369,9 @@ class UserProfile extends Component {
               </Grid>
             </>
         }
+
+
+
 
       </div>
     );

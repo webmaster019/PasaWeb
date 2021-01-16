@@ -29,6 +29,10 @@
     background-color:#19784c !important ;
 
 }
+.bg_danger{
+  background-color:#ec1923 !important ;
+
+}
 .site_container{
   height: 680px;
   position: absolute;
@@ -541,4 +545,16 @@ iframe {
 }
 .loader{
   margin-left: 40%;
+}
+.etat{
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 10px;
+  color: #fff;
+}
+.btn_site{
+  border: none !important;
+  color: #fff !important;
+  margin-top: 5px;
+
 }
