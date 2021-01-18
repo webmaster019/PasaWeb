@@ -39,10 +39,8 @@ class UserProfile extends Component {
       is_createuser: false,
     }
 
-
-
-
   }
+
   change_panel(etat) {
     this.setState({
       change_panel: etat,
@@ -83,6 +81,22 @@ class UserProfile extends Component {
 
 
   }
+  componentWillUnmount(){
+    this.setState({
+       change_panel: false,
+      dataSource: [],
+      isload_data: true,
+      email: null,
+      name: null,
+      password: null,
+      phone: null,
+      role: "AGENT",
+      conf_password: null,
+      modalShow: false,
+      idUser: null,
+      is_createuser: false,
+    });
+  }
 
   componentDidMount() {
     this.Get_user_from_api();
@@ -103,11 +117,11 @@ class UserProfile extends Component {
       "role": role
 
     };
-    if (password == conf_password) {
+    if (password === conf_password) {
       this.setState({
         is_createuser: true
       });
-      axios.post(Api_route("users?userId=2"), Body)
+      axios.post(Api_route("users?userId="+window.sessionStorage.getItem("userID")), Body)
         .then(response => {
 
           // console.log(response);
@@ -173,7 +187,7 @@ class UserProfile extends Component {
 
   changeEtatuserHandeler(idUser) {
     if (idUser) {
-      axios.patch(Api_route("users/disable-user?adminId=2&userId=" + idUser))
+      axios.patch(Api_route("users/disable-user?adminId="+window.sessionStorage.getItem("userID")+"&userId=" + idUser))
         .then(response => {
 
           console.log(response);
@@ -322,7 +336,7 @@ class UserProfile extends Component {
                                 Enregistrer
                              </Button>
                               <Button variant="danger" type="button" className="btn_margin" onClick={() => { this.change_panel(false) }}>
-                                Annuler
+                                QUITTER
                              </Button>
 
                             </>
@@ -357,9 +371,9 @@ class UserProfile extends Component {
                       ctTableFullWidth
                       ctTableResponsive
                       content={
-                        <div className="content">
+                        <div className="content p-b-10">
                           <Col md={3}>
-                            <Button className="bg_site color_wt border_none" onClick={() => { this.change_panel(true) }}>Ajouter un agent</Button>
+                            <button className="bg_site btn  btn_site" onClick={() => { this.change_panel(true) }}>Ajouter un agent</button>
                           </Col>
                           <Col md={7}>
                             <Form className="form_recherche col-lg-12">
@@ -417,7 +431,7 @@ class UserProfile extends Component {
                                         <td>{data.name}</td>
                                         <td>{data.phone ? data.phone : "pas de numéro"}</td>
                                         <td>{data.email}</td>
-                                        <td>{data.role}</td>
+                                        <td><span className={data.role==="ADMIN" ? "etat bg_site" : null}>{data.role} </span></td>
                                         <td>
                                           {/* <Badge pill variant="primary">
                                         Info
@@ -429,7 +443,7 @@ class UserProfile extends Component {
                                         {/* <td>{data.updateDate}</td> */}
                                         {/* <td><Button variant={data.enabled?"danger":"primary"}>{data.enabled?"ACTIVER":"DESACTIVER"}</Button></td>  */}
                                         {
-                                          this.state.modalShow && this.state.idUser == data.id
+                                          this.state.modalShow && this.state.idUser === data.id
                                             ?
                                             null
                                             :
@@ -442,15 +456,15 @@ class UserProfile extends Component {
                                         }
                                         <td>
                                           {
-                                            this.state.modalShow && this.state.idUser == data.id
+                                            this.state.modalShow && this.state.idUser === data.id
                                               ?
                                               <>
                                                 <p>Supprimer cet agent?</p>
                                                 <p><button className="text-danger"
                                                   onClick={() => {
                                                     this.setState({
-                                                      isload_data:true
-                                                    },this.deleteHandeler(data.id));
+                                                      isload_data: true
+                                                    }, this.deleteHandeler(data.id));
                                                   }}
                                                 >oui</button>
                                                   <button className="text-primary"

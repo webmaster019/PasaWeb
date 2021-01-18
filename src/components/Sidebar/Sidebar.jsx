@@ -2,11 +2,8 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "assets/css/customcss.css"
-
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
-import { Grid, Row, Col, } from "react-bootstrap";
-
-import logo from "assets/img/pasa.jpeg";
+import avatar from "assets/img/default-avatar.png"
 
 class Sidebar extends Component {
   constructor(props) {
@@ -43,6 +40,13 @@ class Sidebar extends Component {
           </a>
         </div>
         <div className="sidebar-wrapper">
+          <div className="container col ">
+         
+               <img src={avatar} alt="AVATAR" className="img-circle image_sidbar " />
+          </div>
+          <div className="div_text_sid ">
+            <h6 className="text_side">{window.sessionStorage.getItem("nameUser")}</h6>
+          </div>
           <ul className="nav">
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
             {this.props.routes.map((prop, key) => {

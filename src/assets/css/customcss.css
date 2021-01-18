@@ -558,3 +558,19 @@ iframe {
   margin-top: 5px;
 
 }
+.image_sidbar{
+  width: 100px;
+  height: 100px;
+  /* margin-top: 20px; */
+  align-self:center !important;
+  margin-left: 65px;
+}
+.div_text_sid{
+  width: 100%;
+  /* background-color: turquoise; */
+  text-align: center;
+
+}
+.text_side{
+color: #19784c;
+}

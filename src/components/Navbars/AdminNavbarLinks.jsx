@@ -1,12 +1,44 @@
 
 import React, { Component } from "react";
 import { NavItem, Nav, NavDropdown, MenuItem } from "react-bootstrap";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class AdminNavbarLinks extends Component {
+
+  logOut = e => {
+
+
+
+    confirmAlert({
+      title: '?',
+      message: "Voulez-vous vous déconnectez? ",
+      buttons: [
+        {
+          label: 'Oui',
+          onClick: () => {
+            window.location.href = "/login";
+            window.sessionStorage.clear();
+          }
+        },
+        {
+          label: 'Non',
+          onClick: () => {
+            return false;
+          }
+        }
+      ]
+    })
+
+
+
+  }
+
+
   render() {
     const notification = (
       <div>
-       <i className="fa fa-globe " />
+        <i className="fa fa-globe " />
         <b className="caret" />
         <span className="notification">5</span>
         <p className="hidden-lg hidden-md">Notification</p>
@@ -15,7 +47,7 @@ class AdminNavbarLinks extends Component {
     return (
       <div>
         <Nav>
-         
+
           <NavDropdown
             eventKey={2}
             title={notification}
@@ -34,8 +66,8 @@ class AdminNavbarLinks extends Component {
           </NavItem>
         </Nav>
         <Nav pullRight>
-          <NavItem  href="/login">
-            <i className="fa fa-user"/>Log out
+          <NavItem onClick={this.logOut}>
+            <i className="fa fa-user" />Log out
           </NavItem>
         </Nav>
       </div>
