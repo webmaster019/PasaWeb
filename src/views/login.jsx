@@ -151,9 +151,7 @@ class Login extends Component {
               <span className="login100-form-title p-t-20 p-b-45">
                 Connectez-vous!
             </span>
-              <div className="loader ">
-                <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={this.state.isload_data} />
-              </div>
+            
               <div className="wrap-input100 validate-input m-b-10 m-t-10" >
                 <input className="input100" type="text" name="username"
                   placeholder="Entrez nom d'utilisateur"
@@ -178,12 +176,20 @@ class Login extends Component {
                   <i className="fa fa-lock"></i>
                 </span>
               </div>
-
-              <div className="container-login100-form-btn p-t-10">
+            {
+            this.state.isload_data
+            ?
+              <div className="loader ">
+                <Spinner size={120} spinnerColor={"#333"} spinnerWidth={2} visible={this.state.isload_data} />
+              </div>
+              :
+               <div className="container-login100-form-btn p-t-10">
                 <button className="login100-form-btn">
                   Login
               </button>
               </div>
+            }
+             
 
             </form>
           </div>

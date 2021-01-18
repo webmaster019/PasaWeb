@@ -22,8 +22,7 @@ const App = (props) => {
       </Switch>
      :
      <Switch>
-         <Redirect from="/" to="/login" />
-         <Route path="/login" render={props => <Login {...props} />} />
+         <Route path="*" render={props => <Login {...props} />} />
 
      </Switch>
       
