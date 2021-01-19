@@ -81,9 +81,9 @@ class UserProfile extends Component {
 
 
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({
-       change_panel: false,
+      change_panel: false,
       dataSource: [],
       isload_data: true,
       email: null,
@@ -121,7 +121,7 @@ class UserProfile extends Component {
       this.setState({
         is_createuser: true
       });
-      axios.post(Api_route("users?userId="+window.sessionStorage.getItem("userID")), Body)
+      axios.post(Api_route("users?userId=" + window.sessionStorage.getItem("userID")), Body)
         .then(response => {
 
           // console.log(response);
@@ -187,7 +187,7 @@ class UserProfile extends Component {
 
   changeEtatuserHandeler(idUser) {
     if (idUser) {
-      axios.patch(Api_route("users/disable-user?adminId="+window.sessionStorage.getItem("userID")+"&userId=" + idUser))
+      axios.patch(Api_route("users/disable-user?adminId=" + window.sessionStorage.getItem("userID") + "&userId=" + idUser))
         .then(response => {
 
           console.log(response);
@@ -359,33 +359,12 @@ class UserProfile extends Component {
             <>
 
 
-              <Grid fluid>
+              <div className=" p-b-1 m-b-10">
+                <Col md={3}>
+                  <button className="bg_site btn  btn_site" onClick={() => { this.change_panel(true) }}><i className="fa fa-plus-circle"></i></button>
+                </Col>
 
-
-                <Row>
-                  <Col md={12}>
-
-                    <Card
-                      title={null}
-                      category=""
-                      ctTableFullWidth
-                      ctTableResponsive
-                      content={
-                        <div className="content p-b-10">
-                          <Col md={3}>
-                            <button className="bg_site btn  btn_site" onClick={() => { this.change_panel(true) }}>Ajouter un agent</button>
-                          </Col>
-                          <Col md={7}>
-                            <Form className="form_recherche col-lg-12">
-                              <Form.Control type="text col-lg-9" placeholder="Enter le nom à rechercher" />
-                            </Form>
-                          </Col>
-                        </div>
-                      }
-                    />
-                  </Col>
-                </Row>
-              </Grid>
+              </div>
 
 
 
@@ -401,11 +380,11 @@ class UserProfile extends Component {
                       title="List des agents"
                       category=""
                       ctTableFullWidth
-                      ctTableResponsive
+                      // ctTableResponsive
                       content={
                         <>
 
-                          <Table striped hover>
+                          <Table striped responsive hover>
                             <thead>
                               <tr>
                                 <th >NOM COMPLET</th>
@@ -431,7 +410,7 @@ class UserProfile extends Component {
                                         <td>{data.name}</td>
                                         <td>{data.phone ? data.phone : "pas de numéro"}</td>
                                         <td>{data.email}</td>
-                                        <td><span className={data.role==="ADMIN" ? "etat bg_site" : null}>{data.role} </span></td>
+                                        <td><span className={data.role === "ADMIN" ? "etat bg_site" : null}>{data.role} </span></td>
                                         <td>
                                           {/* <Badge pill variant="primary">
                                         Info
@@ -501,6 +480,7 @@ class UserProfile extends Component {
                   </Col>
                 </Row>
               </Grid>
+
             </>
         }
 

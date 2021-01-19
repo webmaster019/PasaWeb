@@ -25,8 +25,7 @@ class AdminNavbarLinks extends Component {
           label: 'Non',
           onClick: () => {
             return false;
-          },
-          
+          }
         }
       ]
     })

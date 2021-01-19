@@ -33,13 +33,15 @@ class Header extends Component {
       <Navbar fluid>
         <Navbar.Header>
           <Navbar.Brand>
-            {/* <a href="#pablo">{this.props.brandText}</a> */}
+         
+            <button className="button_menue"  onClick={this.mobileSidebarToggle} ><i class="fa fa-bars" aria-hidden="true"></i></button>
+            
+            <a href="#pablo" className="text_site">{this.props.brandText} Pasa <i class="fa fa-leaf" aria-hidden="true"></i></a>
+            
           </Navbar.Brand>
-          <Navbar.Toggle onClick={this.mobileSidebarToggle} />
+          {/* <Navbar.Toggle onClick={this.mobileSidebarToggle} /> */}
         </Navbar.Header>
-        <Navbar.Collapse>
-          <AdminNavbarLinks />
-        </Navbar.Collapse>
+       
       </Navbar>
     );
   }

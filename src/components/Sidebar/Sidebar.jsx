@@ -1,9 +1,11 @@
 
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import "assets/css/customcss.css"
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
-import avatar from "assets/img/default-avatar.png"
+import avatar from "assets/img/default-avatar.png";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 class Sidebar extends Component {
   constructor(props) {
@@ -22,6 +24,35 @@ class Sidebar extends Component {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
   }
+
+  logOut = e => {
+
+
+
+    confirmAlert({
+      title: '?',
+      message: "Voulez-vous vous déconnectez? ",
+      buttons: [
+        {
+          label: 'Oui',
+          onClick: () => {
+            window.location.href = "/login";
+            window.sessionStorage.clear();
+          }
+        },
+        {
+          label: 'Non',
+          onClick: () => {
+            return false;
+          }
+        }
+      ]
+    })
+
+
+
+  }
+
   render() {
  
     return (
@@ -42,18 +73,20 @@ class Sidebar extends Component {
         <div className="sidebar-wrapper">
           <div className="container col ">
          
-               <img src={avatar} alt="AVATAR" className="img-circle image_sidbar " />
+               <img src={avatar} alt="AVATAR" className=" image_sidbar   " />
           </div>
           <div className="div_text_sid ">
             <h6 className="text_side">{window.sessionStorage.getItem("nameUser")}</h6>
+             <button onClick={this.logOut}><i className="fa fa-sign-out" />Log out</button>
           </div>
-          <ul className="nav">
+          <ul className="nav_sid ">
             {this.state.width <= 991 ? <AdminNavbarLinks /> : null}
             {this.props.routes.map((prop, key) => {
               if (!prop.redirect)
                 return (
                   <li
                     className={
+                      " li_link_sidbar"+
                       prop.upgrade
                         ? "active active-pro"
                         : this.activeRoute(prop.layout + prop.path)
@@ -62,11 +95,11 @@ class Sidebar extends Component {
                   >
                     <NavLink
                       to={prop.layout + prop.path}
-                      className="nav-link"
+                      className="link_sidbar row "
                       activeClassName="active"
                     
                     >
-                      <i className={prop.icon} />
+                      <i className={prop.icon+"  inc"} />
                       <p>{prop.name}</p>
                     </NavLink>
                   </li>
@@ -74,6 +107,7 @@ class Sidebar extends Component {
               return null;
             })}
           </ul>
+         
         </div>
       </div>
     );
