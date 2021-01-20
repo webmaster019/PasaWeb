@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/pasaDemoWeb/static/css/main.02777d31.chunk.css",
+    "main.js": "/pasaDemoWeb/static/js/main.7056c86b.chunk.js",
+    "main.js.map": "/pasaDemoWeb/static/js/main.7056c86b.chunk.js.map",
+    "runtime-main.js": "/pasaDemoWeb/static/js/runtime-main.4a532dda.js",
+    "runtime-main.js.map": "/pasaDemoWeb/static/js/runtime-main.4a532dda.js.map",
+    "static/css/2.0265a5bf.chunk.css": "/pasaDemoWeb/static/css/2.0265a5bf.chunk.css",
+    "static/js/2.945b4d89.chunk.js": "/pasaDemoWeb/static/js/2.945b4d89.chunk.js",
+    "static/js/2.945b4d89.chunk.js.map": "/pasaDemoWeb/static/js/2.945b4d89.chunk.js.map",
+    "index.html": "/pasaDemoWeb/index.html",
+    "static/css/2.0265a5bf.chunk.css.map": "/pasaDemoWeb/static/css/2.0265a5bf.chunk.css.map",
+    "static/css/main.02777d31.chunk.css.map": "/pasaDemoWeb/static/css/main.02777d31.chunk.css.map",
+    "static/js/2.945b4d89.chunk.js.LICENSE.txt": "/pasaDemoWeb/static/js/2.945b4d89.chunk.js.LICENSE.txt",
+    "static/media/pe-icon-7-stroke.css": "/pasaDemoWeb/static/media/Pe-icon-7-stroke.7233a7ae.ttf",
+    "static/media/customcss.css": "/pasaDemoWeb/static/media/bg.e1898938.jpg",
+    "static/media/sidebar-3.9992d0ce.jpg": "/pasaDemoWeb/static/media/sidebar-3.9992d0ce.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4a532dda.js",
+    "static/css/2.0265a5bf.chunk.css",
+    "static/js/2.945b4d89.chunk.js",
+    "static/css/main.02777d31.chunk.css",
+    "static/js/main.7056c86b.chunk.js"
+  ]
+}
